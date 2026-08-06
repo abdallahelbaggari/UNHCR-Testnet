@@ -350,20 +350,44 @@ function saveSaved(){try{localStorage.setItem('unhcr_saved',JSON.stringify(_save
 function saveNotes(){try{localStorage.setItem('unhcr_notes',JSON.stringify(_notes));}catch(e){}}
 function saveEmergContacts(){try{localStorage.setItem('unhcr_emerg_contacts',JSON.stringify(_emergContacts));}catch(e){}}
 
-/* BOOT */
-window.addEventListener('load',function(){
-  if(!piUser)return;
-  var av=document.getElementById('hdr-av');
-  if(av&&piUser.username)av.textContent=piUser.username[0].toUpperCase();
-  if(typeof Pi!=='undefined'){
-    try{Pi.init({version:'2.0',sandbox:true});}catch(e){}
-    Pi.authenticate(['username'],function(){}).then(function(a){
-      if(a&&a.user){piUser=a.user;try{localStorage.setItem('unhcr_user',JSON.stringify(piUser));}catch(e){}}
-      var av2=document.getElementById('hdr-av');
-      if(av2&&piUser.username)av2.textContent=piUser.username[0].toUpperCase();
-    }).catch(function(){});
+/* BOOT — proven pattern: Pi.init() once, plain function() callbacks */
+(function() {
+  if (typeof Pi !== 'undefined') {
+    try { Pi.init({ version: '2.0', sandbox: true }); } catch(e) {}
   }
-  goTab('home',document.querySelector('.nb'));
+})();
+
+window.addEventListener('load', function() {
+  if (!piUser) { window.location.href = '/'; return; }
+
+  /* Update avatar */
+  var av = document.getElementById('hdr-av');
+  if (av && piUser.username) av.textContent = piUser.username[0].toUpperCase();
+
+  /* Silent re-auth to refresh session — plain function() callbacks */
+  if (typeof Pi !== 'undefined' && !piUser.isGuest) {
+    Pi.authenticate(
+      ['username'],
+      function onIncompletePaymentFound(payment) {
+        fetch('/complete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ paymentId: payment.identifier })
+        }).catch(function() {});
+      }
+    ).then(function(a) {
+      if (a && a.user) {
+        piUser = a.user;
+        try { localStorage.setItem('unhcr_user', JSON.stringify(piUser)); } catch(e) {}
+        var av2 = document.getElementById('hdr-av');
+        if (av2 && piUser.username) av2.textContent = piUser.username[0].toUpperCase();
+      }
+    }).catch(function() {
+      /* Silent fail — user already loaded from localStorage */
+    });
+  }
+
+  goTab('home', document.querySelector('.nb'));
 });
 
 /* \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550
