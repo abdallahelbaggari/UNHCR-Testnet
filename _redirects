@@ -1,3 +1,2 @@
-# Cloudflare Pages _redirects
-# index.html is served at / automatically by Cloudflare Pages
-# No vanity redirects needed - they were causing redirect loops
+/app    /app.html    301
+/login  /index.html  301
