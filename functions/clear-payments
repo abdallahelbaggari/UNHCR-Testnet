@@ -1,96 +1,121 @@
 /* Humanitarian Hub TESTNET — /clear-payments
-   Finds and cancels ALL pending payments for the app
-   Call this endpoint to clear stuck payments */
+   Cancels ALL incomplete/pending payments via Pi API
+   Visit: https://unhcr-testnet.pages.dev/clear-payments */
 
 export async function onRequestGet(context) {
   const apiKey = context.env.PI_API_KEY;
+
   if (!apiKey) {
-    return new Response(JSON.stringify({ error: 'PI_API_KEY not set' }), {
+    return new Response(JSON.stringify({
+      error: 'PI_API_KEY not set in Cloudflare Environment Variables',
+      fix: 'Go to Cloudflare Pages → unhcr-testnet → Settings → Environment Variables → add PI_API_KEY'
+    }), {
       status: 200,
       headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
     });
   }
 
+  const results = [];
+  let cancelled = 0;
+  let errors = 0;
+
   try {
-    /* Get all incomplete payments for this app */
-    const r = await fetch('https://api.minepi.com/v2/payments?payment_type=incomplete', {
+    /* Step 1: Get incomplete payments from Pi API */
+    const listResp = await fetch('https://api.minepi.com/v2/payments?payment_type=incomplete', {
       method: 'GET',
       headers: {
         'Authorization': `Key ${apiKey}`,
         'Content-Type': 'application/json'
       }
     });
-    const data = await r.json();
-    const payments = data.data || data.payments || [];
 
-    const results = [];
+    const listData = await listResp.json();
+    console.log('[clear-payments] Pi API response:', JSON.stringify(listData));
+
+    const payments = listData.data || listData.payments || [];
+
+    if (payments.length === 0) {
+      return new Response(JSON.stringify({
+        success: true,
+        message: 'No incomplete payments found — payment queue is clear!',
+        total: 0,
+        cancelled: 0,
+        note: 'If you still see the pending error, wait 60 seconds and try making a new payment.'
+      }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+      });
+    }
+
+    /* Step 2: Cancel each incomplete payment */
     for (const payment of payments) {
       const pid = payment.identifier;
+      const status = payment.status || {};
+
+      console.log(`[clear-payments] Processing payment ${pid}:`, JSON.stringify(status));
+
+      /* Try to cancel */
       try {
-        const cr = await fetch(`https://api.minepi.com/v2/payments/${pid}/cancel`, {
+        const cancelResp = await fetch(`https://api.minepi.com/v2/payments/${pid}/cancel`, {
           method: 'POST',
           headers: {
             'Authorization': `Key ${apiKey}`,
             'Content-Type': 'application/json'
           }
         });
-        const cd = await cr.json();
-        results.push({ paymentId: pid, status: 'cancelled', result: cd });
-      } catch (e) {
-        results.push({ paymentId: pid, status: 'error', error: e.message });
+        const cancelData = await cancelResp.json();
+        results.push({
+          paymentId: pid,
+          amount: payment.amount,
+          memo: payment.memo,
+          status: 'cancelled',
+          piResponse: cancelData
+        });
+        cancelled++;
+      } catch (cancelErr) {
+        /* If cancel fails, try approve then cancel */
+        try {
+          await fetch(`https://api.minepi.com/v2/payments/${pid}/approve`, {
+            method: 'POST',
+            headers: { 'Authorization': `Key ${apiKey}`, 'Content-Type': 'application/json' }
+          });
+          const cancelResp2 = await fetch(`https://api.minepi.com/v2/payments/${pid}/cancel`, {
+            method: 'POST',
+            headers: { 'Authorization': `Key ${apiKey}`, 'Content-Type': 'application/json' }
+          });
+          const cancelData2 = await cancelResp2.json();
+          results.push({ paymentId: pid, status: 'approved_then_cancelled', piResponse: cancelData2 });
+          cancelled++;
+        } catch (e2) {
+          results.push({ paymentId: pid, status: 'error', error: e2.message });
+          errors++;
+        }
       }
     }
 
+  } catch (e) {
     return new Response(JSON.stringify({
-      message: `Processed ${results.length} pending payments`,
-      results: results,
-      sandbox: true
+      success: false,
+      error: e.message,
+      hint: 'Check that PI_API_KEY is the TESTNET key from develop.pi'
     }), {
       status: 200,
       headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
     });
-
-  } catch (e) {
-    return new Response(JSON.stringify({ error: e.message }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
-    });
   }
-}
 
-export async function onRequestPost(context) {
-  /* Also handle POST — cancel a specific payment by ID */
-  try {
-    const body = await context.request.json();
-    const paymentId = body.paymentId;
-    const apiKey = context.env.PI_API_KEY;
-
-    if (!apiKey) {
-      return new Response(JSON.stringify({ cancelled: true, note: 'no_api_key' }), {
-        status: 200,
-        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
-      });
-    }
-
-    const r = await fetch(`https://api.minepi.com/v2/payments/${paymentId}/cancel`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Key ${apiKey}`,
-        'Content-Type': 'application/json'
-      }
-    });
-    const d = await r.json();
-
-    return new Response(JSON.stringify({ cancelled: true, paymentId, result: d, sandbox: true }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
-    });
-  } catch (e) {
-    return new Response(JSON.stringify({ cancelled: true, error: e.message }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
-    });
-  }
+  return new Response(JSON.stringify({
+    success: true,
+    message: `Processed ${results.length} payment(s) — cancelled ${cancelled}, errors ${errors}`,
+    total: results.length,
+    cancelled,
+    errors,
+    results,
+    next: 'Now open the app and try making a payment — the queue should be clear!'
+  }), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+  });
 }
 
 export async function onRequestOptions() {
