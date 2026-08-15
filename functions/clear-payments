@@ -1,0 +1,105 @@
+/* Humanitarian Hub TESTNET — /clear-payments
+   Finds and cancels ALL pending payments for the app
+   Call this endpoint to clear stuck payments */
+
+export async function onRequestGet(context) {
+  const apiKey = context.env.PI_API_KEY;
+  if (!apiKey) {
+    return new Response(JSON.stringify({ error: 'PI_API_KEY not set' }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+    });
+  }
+
+  try {
+    /* Get all incomplete payments for this app */
+    const r = await fetch('https://api.minepi.com/v2/payments?payment_type=incomplete', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Key ${apiKey}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    const data = await r.json();
+    const payments = data.data || data.payments || [];
+
+    const results = [];
+    for (const payment of payments) {
+      const pid = payment.identifier;
+      try {
+        const cr = await fetch(`https://api.minepi.com/v2/payments/${pid}/cancel`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Key ${apiKey}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        const cd = await cr.json();
+        results.push({ paymentId: pid, status: 'cancelled', result: cd });
+      } catch (e) {
+        results.push({ paymentId: pid, status: 'error', error: e.message });
+      }
+    }
+
+    return new Response(JSON.stringify({
+      message: `Processed ${results.length} pending payments`,
+      results: results,
+      sandbox: true
+    }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+    });
+
+  } catch (e) {
+    return new Response(JSON.stringify({ error: e.message }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+    });
+  }
+}
+
+export async function onRequestPost(context) {
+  /* Also handle POST — cancel a specific payment by ID */
+  try {
+    const body = await context.request.json();
+    const paymentId = body.paymentId;
+    const apiKey = context.env.PI_API_KEY;
+
+    if (!apiKey) {
+      return new Response(JSON.stringify({ cancelled: true, note: 'no_api_key' }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+      });
+    }
+
+    const r = await fetch(`https://api.minepi.com/v2/payments/${paymentId}/cancel`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Key ${apiKey}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    const d = await r.json();
+
+    return new Response(JSON.stringify({ cancelled: true, paymentId, result: d, sandbox: true }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+    });
+  } catch (e) {
+    return new Response(JSON.stringify({ cancelled: true, error: e.message }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+    });
+  }
+}
+
+export async function onRequestOptions() {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type,Authorization'
+    }
+  });
+}
