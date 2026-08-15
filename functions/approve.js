@@ -1,5 +1,5 @@
 /* Humanitarian Hub TESTNET — /approve — Cloudflare Pages Function
-   Pi TESTNET — sandbox:true — TEST PAYMENTS ONLY */
+   Pi TESTNET — sandbox:true — ALWAYS returns 200 */
 
 export async function onRequestGet(context) {
   return new Response(JSON.stringify({
@@ -28,8 +28,10 @@ export async function onRequestPost(context) {
     const body = await context.request.json();
     const paymentId = body.paymentId;
 
+    console.log('[TESTNET] Approving payment:', paymentId);
+
     if (!paymentId) {
-      return new Response(JSON.stringify({ approved: true, note: 'no_payment_id' }), {
+      return new Response(JSON.stringify({ approved: true, note: 'no_payment_id', sandbox: true }), {
         status: 200,
         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
       });
@@ -37,14 +39,12 @@ export async function onRequestPost(context) {
 
     const apiKey = context.env.PI_API_KEY;
     if (!apiKey) {
-      /* No API key — still return 200 to avoid Payment Expired */
       return new Response(JSON.stringify({ approved: true, note: 'no_api_key', sandbox: true }), {
         status: 200,
         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
       });
     }
 
-    /* Pi TESTNET approve endpoint */
     const r = await fetch(`https://api.minepi.com/v2/payments/${paymentId}/approve`, {
       method: 'POST',
       headers: {
@@ -54,14 +54,17 @@ export async function onRequestPost(context) {
     });
 
     const d = await r.json();
+    console.log('[TESTNET] Pi approve result:', JSON.stringify(d));
 
+    /* ALWAYS return 200 — non-200 causes Payment Expired in Pi SDK */
     return new Response(JSON.stringify({ approved: true, payment: d, sandbox: true }), {
       status: 200,
       headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
     });
 
   } catch (e) {
-    return new Response(JSON.stringify({ approved: true, note: 'processed', sandbox: true, error: e.message }), {
+    console.error('[TESTNET] Approve error:', e.message);
+    return new Response(JSON.stringify({ approved: true, note: 'error_but_approved', sandbox: true, error: e.message }), {
       status: 200,
       headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
     });
