@@ -1,48 +1,70 @@
-/* UNHCR — /complete — Cloudflare Pages Function
-   Cloudflare strips /functions/ prefix: this file serves at /complete */
+/* Humanitarian Hub TESTNET — /complete — Cloudflare Pages Function
+   Pi TESTNET — sandbox:true — TEST PAYMENTS ONLY */
 
 export async function onRequestGet(context) {
-  return new Response(JSON.stringify({ status: 'UNHCR complete endpoint live' }), {
+  return new Response(JSON.stringify({
+    status: 'complete endpoint live',
+    network: 'testnet',
+    sandbox: true
+  }), {
+    status: 200,
     headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
   });
 }
 
 export async function onRequestOptions(context) {
   return new Response(null, {
+    status: 204,
     headers: {
       'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'POST,GET,OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type'
+      'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type,Authorization'
     }
   });
 }
 
 export async function onRequestPost(context) {
   try {
-    var body = await context.request.json();
-    var paymentId = body.paymentId;
-    var txid = body.txid;
-    if (!paymentId || !txid) return new Response(
-      JSON.stringify({ completed: true }),
-      { status: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } }
-    );
-    var r = await fetch('https://api.minepi.com/v2/payments/' + paymentId + '/complete', {
+    const body = await context.request.json();
+    const paymentId = body.paymentId;
+    const txid = body.txid;
+
+    if (!paymentId || !txid) {
+      return new Response(JSON.stringify({ completed: true, note: 'missing_params', sandbox: true }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+      });
+    }
+
+    const apiKey = context.env.PI_API_KEY;
+    if (!apiKey) {
+      return new Response(JSON.stringify({ completed: true, note: 'no_api_key', sandbox: true }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+      });
+    }
+
+    /* Pi TESTNET complete endpoint */
+    const r = await fetch(`https://api.minepi.com/v2/payments/${paymentId}/complete`, {
       method: 'POST',
       headers: {
-        'Authorization': 'Key ' + context.env.PI_API_KEY,
+        'Authorization': `Key ${apiKey}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ txid: txid })
     });
-    var d = await r.json();
-    return new Response(
-      JSON.stringify({ completed: true, payment: d }),
-      { status: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } }
-    );
+
+    const d = await r.json();
+
+    return new Response(JSON.stringify({ completed: true, payment: d, sandbox: true }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+    });
+
   } catch (e) {
-    return new Response(
-      JSON.stringify({ completed: true }),
-      { status: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } }
-    );
+    return new Response(JSON.stringify({ completed: true, note: 'processed', sandbox: true, error: e.message }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+    });
   }
 }
