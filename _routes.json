@@ -1,9 +1,5 @@
 {
   "version": 1,
-  "include": [
-    "/approve",
-    "/complete",
-    "/cancel-payment"
-  ],
+  "include": ["/approve", "/complete", "/cancel-payment"],
   "exclude": []
 }
