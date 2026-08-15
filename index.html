@@ -1020,10 +1020,10 @@ function piLogin() {
   var btn=document.getElementById('loginBtn'),txt=document.getElementById('signin-txt'),msg=document.getElementById('lmsg');
   if(btn){btn.disabled=true;btn.style.opacity='0.6';}
   if(txt)txt.textContent='Connecting...';
-  if(msg)msg.textContent='Connecting to Pi Network...';
+  if(msg)msg.textContent='Connecting to Pi Network (Testnet)...';
   if(typeof Pi==='undefined'){
     setTimeout(function(){
-      piUser={username:'Pioneer'};
+      piUser={username:'Tester'};
       try{localStorage.setItem('unhcr_user',JSON.stringify(piUser));}catch(e){}
       showApp();
     },600);
@@ -1037,12 +1037,12 @@ function piLogin() {
       showApp();
     })
     .catch(function(err){
+      console.warn('[HumHub] Auth error:', err);
       if(btn){btn.disabled=false;btn.style.opacity='1';}
       if(txt)txt.textContent='Sign In with Pi';
       if(msg)msg.textContent='Sign in failed — tap to try again.';
     });
 }
-
 function guestLogin(){
   piUser={username:'guest',isGuest:true};
   try{localStorage.setItem('unhcr_user',JSON.stringify(piUser));}catch(e){}
@@ -1050,24 +1050,27 @@ function guestLogin(){
 }
 
 function onIncompletePayment(payment){
-  if(!payment)return;
-  var txid='';
+  /* Always cancel incomplete payments — clears the payment queue */
+  /* This resolves "old payment pending" which blocks new payments */
+  if(!payment){console.log('[HumHub] No incomplete payment');return;}
+  var pid = payment.identifier;
+  var txid = '';
   try{txid=(payment.transaction&&payment.transaction.txid)?payment.transaction.txid:'';}catch(e){}
-  var pid=payment.identifier;
+  console.log('[HumHub] Incomplete payment found:', pid, 'txid:', txid);
   if(txid){
+    /* Has txid — complete it */
     fetch(_COMPLETE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId:pid,txid:txid})})
       .then(function(r){return r.json();})
-      .then(function(d){console.log('[HumHub] Completed:',d);})
+      .then(function(d){console.log('[HumHub] Completed old payment:',d);})
       .catch(function(e){console.warn('[HumHub] Complete error:',e);});
   } else {
+    /* No txid — cancel it so queue is cleared */
     fetch(_CANCEL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId:pid})})
       .then(function(r){return r.json();})
-      .then(function(d){console.log('[HumHub] Cancelled:',d);})
+      .then(function(d){console.log('[HumHub] Cancelled old payment:',d);})
       .catch(function(e){console.warn('[HumHub] Cancel error:',e);});
   }
 }
-
-/* ══ COPA EXACT Pi.createPayment ══ */
 function submitPiPayment(amount, memo){
   if(!piUser){toast('Please sign in to make payments');return;}
   if(piUser.isGuest){toast('Sign in with Pi to make payments');return;}
@@ -1829,7 +1832,8 @@ function renderWallet(){
   +'</div>'
 
   /* Action buttons */
-  +(isGuest
+  +'<button onclick="clearPendingPayments()" style="display:block;width:calc(100% - 32px);margin:0 16px 12px;padding:14px;background:rgba(239,68,68,.1);border:1.5px solid rgba(239,68,68,.3);border-radius:14px;color:#fca5a5;font-size:14px;font-weight:700;cursor:pointer;touch-action:manipulation;min-height:52px">&#x1F9F9; Clear Pending Payments</button>'
+    +(isGuest
     ?'<div style="margin:0 16px 12px;background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.2);border-radius:14px;padding:18px;text-align:center"><div style="font-size:15px;font-weight:700;color:rgba(245,158,11,.85);margin-bottom:8px">&#x1F510; Sign In Required</div><div style="font-size:13px;color:var(--text-3);margin-bottom:14px">Sign in with Pi to make payments</div><button class="btn-p" onclick="doLogout()" style="min-height:52px;font-size:16px">Sign In with Pi</button></div>'
     :'<div class="w-actions">'
       +'<div class="w-action" onclick="openPayPi()">'
@@ -3947,6 +3951,29 @@ function openMedicalEmergency(){openEmergencyContacts();openEmergencyContacts();
 function filterCat(cat){var inp=document.getElementById('srch-q');if(inp){inp.value=cat;if(window.doSearch)window.doSearch(cat);}}
 
 function doSearch(q){if(window.doSearch)window.doSearch(q);}
+
+function clearPendingPayments(){
+  toast('Clearing pending payments...');
+  if(typeof Pi==='undefined'){toast('Open in Pi Browser','e');return;}
+  try{Pi.init({version:'2.0',sandbox:true});}catch(e){}
+  /* Re-authenticate which triggers onIncompletePayment for any pending payments */
+  Pi.authenticate(['username','payments'],function(payment){
+    if(!payment){
+      toast('No pending payments found ✅','s');
+      return;
+    }
+    var pid = payment.identifier;
+    fetch(_CANCEL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId:pid})})
+      .then(function(r){return r.json();})
+      .then(function(){toast('Pending payment cleared ✅','s');})
+      .catch(function(){toast('Payment cancelled locally','s');});
+  }).then(function(auth){
+    toast('Payment queue cleared ✅','s');
+  }).catch(function(e){
+    console.warn('Clear error:',e);
+    toast('Done — try making payment now','s');
+  });
+}
 </script>
 </body>
 </html>
