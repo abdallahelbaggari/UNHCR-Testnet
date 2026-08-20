@@ -972,40 +972,43 @@ body {
 </div>
 
 <div id="toast"></div>
-<script>/* ══════════════════════════════════════
-   TESTNET PAYMENT ENGINE
-   Pi sandbox:true — Copa exact pattern
-══════════════════════════════════════ */
+<script>/* ══════════════════════════════════════════
+   COPA EXACT PAYMENT ENGINE
+   Testnet: sandbox:true (only change from Copa)
+   URL: https://unhcr-testnet.pages.dev
+══════════════════════════════════════════ */
+
 var piUser = null;
 var _APPROVE  = '/approve';
 var _COMPLETE = '/complete';
 var _CANCEL   = '/cancel-payment';
 try{var _su=localStorage.getItem('unhcr_user');if(_su)piUser=JSON.parse(_su);}catch(e){}
 
+/* Copa exact onIncompletePayment */
 function onIncompletePayment(payment) {
   if (!payment) return;
-  console.log('[HumHub TESTNET] Incomplete payment:', payment.identifier);
+  console.log('[HumHub] Incomplete payment:', payment.identifier);
   var txid = '';
-  try{txid=(payment.transaction&&payment.transaction.txid)?payment.transaction.txid:'';}catch(e){}
+  try { txid = (payment.transaction && payment.transaction.txid) ? payment.transaction.txid : ''; } catch(e){}
   var pid = payment.identifier;
   if (txid) {
-    fetch(_COMPLETE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId:pid,txid:txid})})
-      .then(function(r){return r.json();})
-      .then(function(d){console.log('[HumHub] Completed old:',d);})
-      .catch(function(e){console.warn('[HumHub] Complete error:',e);});
+    fetch(_COMPLETE,{ method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId:pid,txid:txid})})
+      .then(function(r){ return r.json(); })
+      .then(function(d){ console.log('[HumHub] Completed old payment:', d); })
+      .catch(function(e){ console.warn('[HumHub] Complete error:', e); });
   } else {
-    fetch(_CANCEL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId:pid})})
-      .then(function(r){return r.json();})
-      .then(function(d){console.log('[HumHub] Cancelled old:',d);})
-      .catch(function(e){console.warn('[HumHub] Cancel error:',e);});
+    fetch(_CANCEL,{ method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId:pid})})
+      .then(function(r){ return r.json(); })
+      .then(function(d){ console.log('[HumHub] Cancelled old payment:', d); })
+      .catch(function(e){ console.warn('[HumHub] Cancel error:', e); });
   }
 }
 
+/* Copa exact piLogin — sandbox:true for testnet */
 function piLogin() {
   var btn=document.getElementById('loginBtn'),txt=document.getElementById('signin-txt'),msg=document.getElementById('lmsg');
   if(btn){btn.disabled=true;btn.style.opacity='0.6';}
   if(txt)txt.textContent='Connecting...';
-  if(msg)msg.textContent='Connecting to Pi Testnet...';
   if(typeof Pi==='undefined'){
     setTimeout(function(){
       piUser={username:'Tester'};
@@ -1014,18 +1017,18 @@ function piLogin() {
     },600);
     return;
   }
-  Pi.init({version:'2.0', sandbox:true});
+  Pi.init({ version:'2.0', sandbox:true });
   Pi.authenticate(['username','payments'], onIncompletePayment)
     .then(function(auth){
-      piUser=auth.user;
+      piUser = auth.user;
       try{localStorage.setItem('unhcr_user',JSON.stringify(piUser));}catch(e){}
       showApp();
     })
-    .catch(function(err){
-      console.warn('[HumHub] Auth error:',err);
+    .catch(function(e){
+      console.warn('[HumHub] auth error:', e);
       if(btn){btn.disabled=false;btn.style.opacity='1';}
       if(txt)txt.textContent='Sign In with Pi';
-      if(msg)msg.textContent='Sign in failed — tap to try again.';
+      if(msg)msg.textContent='Failed — tap to retry';
     });
 }
 
@@ -1036,9 +1039,6 @@ function guestLogin(){
 }
 
 function showApp(){
-  if(typeof Pi!=='undefined'){
-    try{Pi.init({version:'2.0',sandbox:true});}catch(e){}
-  }
   var L=document.getElementById('login'),A=document.getElementById('app');
   if(L)L.style.display='none';
   if(A){A.style.display='flex';A.style.flexDirection='column';}
@@ -1067,8 +1067,7 @@ function doLogout(){
   try{localStorage.removeItem('unhcr_user');}catch(e){}
   piUser=null;
   var L=document.getElementById('login'),A=document.getElementById('app');
-  if(A)A.style.display='none';
-  if(L)L.style.display='flex';
+  if(A)A.style.display='none';if(L)L.style.display='flex';
   var btn=document.getElementById('loginBtn'),txt=document.getElementById('signin-txt'),msg=document.getElementById('lmsg');
   if(btn){btn.disabled=false;btn.style.opacity='1';}
   if(txt)txt.textContent='Sign In with Pi';
@@ -1079,110 +1078,94 @@ window.addEventListener('load',function(){
   if(piUser&&piUser.username){showApp();}
 });
 
-/* ══ COPA EXACT Pi.createPayment — sandbox:true ══ */
+/* Copa exact createPayment — sandbox:true only change */
 function submitPiPayment(amount, memo){
   if(!piUser){toast('Please sign in to make payments');return;}
   if(piUser.isGuest){toast('Sign in with Pi to make payments');return;}
-  if(typeof Pi==='undefined'){toast('Open in Pi Browser to make payments','e');return;}
-  try{Pi.init({version:'2.0',sandbox:true});}catch(e){}
   Pi.createPayment({
-    amount: amount,
-    memo: memo,
-    metadata: {app:'HumHub-TESTNET', type:'humanitarian_test', user:piUser.username, ts:Date.now()},
+    amount:   amount,
+    memo:     memo,
+    metadata: { app:'HumHub-TESTNET', type:'humanitarian_test', user:piUser.username, ts:Date.now() },
   },{
     onReadyForServerApproval: function(paymentId){
-      fetch(_APPROVE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId:paymentId})})
-        .then(function(r){return r.json();})
-        .then(function(d){console.log('[HumHub TESTNET] Approved:',d);})
-        .catch(function(e){console.warn('[HumHub TESTNET] Approve error:',e);});
+      fetch(_APPROVE,{ method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId:paymentId})})
+        .then(function(r){ return r.json(); })
+        .then(function(d){ console.log('[HumHub] Approved:', d); })
+        .catch(function(e){ console.warn('[HumHub] Approve error:', e); });
     },
     onReadyForServerCompletion: function(paymentId, txid){
-      fetch(_COMPLETE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId:paymentId,txid:txid})})
-        .then(function(r){return r.json();})
+      fetch(_COMPLETE,{ method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId:paymentId,txid:txid})})
+        .then(function(r){ return r.json(); })
         .then(function(d){
           _txHistory.push({id:paymentId,txid:txid,amount:amount,memo:memo,type:'out',date:new Date().toISOString()});
           saveTx();
           toast('Test payment complete! π'+amount,'s');
           setTimeout(function(){renderWallet();},800);
         })
-        .catch(function(e){console.warn('[HumHub TESTNET] Complete error:',e);});
+        .catch(function(e){ console.warn('[HumHub] Complete error:', e); });
     },
-    onCancel: function(paymentId){
-      fetch(_CANCEL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId:paymentId})})
-        .catch(function(){});
-      toast('Test payment cancelled');
-    },
-    onError: function(error,payment){
-      console.error('[HumHub TESTNET] Payment error:',error,payment);
-      toast('Payment error: '+JSON.stringify(error),'e');
-    },
+    onCancel:  function(paymentId){ fetch(_CANCEL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId:paymentId})}).catch(function(){}); toast('Payment cancelled'); },
+    onError:   function(error,payment){ console.error('[HumHub] Payment error:',error,payment); toast('Payment error','e'); },
   });
 }
 
-function donatePi(amount){closeP();submitPiPayment(amount,'[TESTNET] Humanitarian Community Contribution');}
-function donatePiCustom(){
-  var el=document.getElementById('donate-amt');
-  var amt=parseFloat(el&&el.value||0);
-  if(!amt||amt<0.01){toast('Enter a valid amount','e');return;}
-  closeP();submitPiPayment(amt,'[TESTNET] Humanitarian Community Contribution');
-}
-function submitPayment(){
-  var amt=parseFloat((document.getElementById('pay-amt')&&document.getElementById('pay-amt').value)||0);
-  var memo=(document.getElementById('pay-memo')&&document.getElementById('pay-memo').value)||'[TESTNET] Humanitarian contribution';
-  if(!amt||amt<0.01){toast('Enter a valid amount','e');return;}
-  closeP();submitPiPayment(amt,memo);
-}
-function doCustomPayment(){
-  var amt=parseFloat((document.getElementById('custom-amt')&&document.getElementById('custom-amt').value)||0);
-  var memo=(document.getElementById('custom-memo')&&document.getElementById('custom-memo').value)||'[TESTNET] Humanitarian contribution';
-  if(!amt||amt<0.01){toast('Enter a valid amount','e');return;}
-  closeP();submitPiPayment(amt,memo);
-}
+function donatePi(amount){ closeP(); submitPiPayment(amount,'[TESTNET] Humanitarian Contribution'); }
+function donatePiCustom(){ var e=document.getElementById('donate-amt'); var a=parseFloat(e&&e.value||0); if(!a||a<0.01){toast('Enter amount','e');return;} closeP(); submitPiPayment(a,'[TESTNET] Humanitarian Contribution'); }
+function submitPayment(){ var a=parseFloat((document.getElementById('pay-amt')&&document.getElementById('pay-amt').value)||0); var m=(document.getElementById('pay-memo')&&document.getElementById('pay-memo').value)||'[TESTNET] Contribution'; if(!a||a<0.01){toast('Enter amount','e');return;} closeP(); submitPiPayment(a,m); }
+function doCustomPayment(){ var a=parseFloat((document.getElementById('custom-amt')&&document.getElementById('custom-amt').value)||0); if(!a||a<0.01){toast('Enter amount','e');return;} closeP(); submitPiPayment(a,'[TESTNET] Contribution'); }
+function clearPendingPayments(){ toast('Clearing...'); fetch('/clear-payments').then(function(r){return r.json();}).then(function(d){ if(d.cleared>0){toast('Cleared '+d.cleared+' payment(s) ✅','s');}else{toast('No pending payments ✅','s');} }).catch(function(){toast('Error clearing','e');}); }
 
-function clearPendingPayments(){
-  toast('Clearing all pending payments via server...');
+/* ══════════════════════════════════════════════
+   HUMANITARIAN HUB TESTNET BOOT ENGINE v3.0
+   Pi Network Testnet — sandbox:true
+   v3.0-testnet-1786874339
+══════════════════════════════════════════════ */
 
-  /* Step 1: Call server endpoint to cancel all pending payments via Pi API */
-  fetch('/clear-payments', {
-    method: 'GET',
-    headers: {'Content-Type': 'application/json'}
-  })
-  .then(function(r){ return r.json(); })
-  .then(function(d){
-    console.log('[HumHub TESTNET] Clear result:', d);
-    var count = (d.results && d.results.length) || 0;
-    if(count > 0){
-      toast('Cleared '+count+' pending payment(s) ✅ Try again now!', 's');
-    } else {
-      toast('No pending payments found on server ✅', 's');
-    }
-  })
-  .catch(function(e){
-    console.warn('[HumHub TESTNET] Server clear error:', e);
-    /* Step 2: Fallback - try Pi SDK re-authentication to handle incomplete */
-    if(typeof Pi !== 'undefined'){
-      try{Pi.init({version:'2.0', sandbox:true});}catch(e2){}
-      Pi.authenticate(['username','payments'], function(payment){
-        if(!payment){
-          toast('No pending payments ✅ Try payment now!', 's');
-          return;
-        }
-        var pid = payment.identifier;
-        fetch('/cancel-payment', {
-          method:'POST',
-          headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({paymentId:pid})
-        })
-        .then(function(){ toast('Pending payment cleared ✅', 's'); })
-        .catch(function(){ toast('Cleared locally ✅', 's'); });
-      })
-      .then(function(){ toast('Payment queue cleared ✅ Try again!', 's'); })
-      .catch(function(){ toast('Done — try payment now', 's'); });
-    } else {
-      toast('Open in Pi Browser to clear payments', 'e');
-    }
-  });
-}
+
+
+
+
+
+try{var _su=localStorage.getItem('unhcr_user');if(_su)piUser=JSON.parse(_su);}catch(e){}
+
+/* Handle incomplete/stuck payments — called by Pi.authenticate */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ══ Pi TESTNET PAYMENT — Copa exact — sandbox:true ══ */
+
+
+
+
+
+
+
+
+
+/* ══════════════════════════════════════
+   TESTNET PAYMENT ENGINE
+   Pi sandbox:true — Copa exact pattern
+══════════════════════════════════════ */
+
+
+
+
+
+
+
+
 
 /* ══ SW KILL ══ */
 /* SW NUCLEAR KILL v2 - clears everything */
@@ -1479,7 +1462,7 @@ function openResFood(){
    Independent community platform — not affiliated with UNHCR/UN
 ================================================================ */
 var piUser    = null;
-var _APPROVE  = '/approve';
+
 try{var _s=localStorage.getItem('unhcr_user');if(_s)piUser=JSON.parse(_s);}catch(e){}
 
 
@@ -1498,9 +1481,9 @@ window.addEventListener('load',function(){
    Independent community platform — not affiliated with UNHCR/UN
 ================================================================ */
 var piUser    = null;
-var _APPROVE  = '/approve';
-var _COMPLETE = '/complete';
-var _CANCEL   = '/cancel-payment';
+
+
+
 try{var _s=localStorage.getItem('unhcr_user');if(_s)piUser=JSON.parse(_s);}catch(e){}
 
 
@@ -1520,9 +1503,9 @@ window.addEventListener('load',function(){
    Login: Copa uploaded pattern (index__10_.html)
 ================================================================ */
 var piUser    = null;
-var _APPROVE  = '/approve';
-var _COMPLETE = '/complete';
-var _CANCEL   = '/cancel-payment';
+
+
+
 
 try{var _s=localStorage.getItem('unhcr_user');if(_s)piUser=JSON.parse(_s);}catch(e){}
 
