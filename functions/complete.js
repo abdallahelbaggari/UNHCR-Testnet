@@ -1,14 +1,13 @@
-/* Humanitarian Hub TESTNET — /complete — Cloudflare Pages Function
-   Pi TESTNET — sandbox:true — TEST PAYMENTS ONLY */
+/* Humanitarian Hub — /complete — Cloudflare Pages Function
+   Pi Mainnet — sandbox:false */
 
 export async function onRequestGet(context) {
-  return new Response(JSON.stringify({
-    status: 'complete endpoint live',
-    network: 'testnet',
-    sandbox: true
-  }), {
+  return new Response(JSON.stringify({ status: 'complete endpoint live', network: 'mainnet' }), {
     status: 200,
-    headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    }
   });
 }
 
@@ -30,7 +29,7 @@ export async function onRequestPost(context) {
     const txid = body.txid;
 
     if (!paymentId || !txid) {
-      return new Response(JSON.stringify({ completed: true, note: 'missing_params', sandbox: true }), {
+      return new Response(JSON.stringify({ completed: true, note: 'missing_params' }), {
         status: 200,
         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
       });
@@ -38,13 +37,12 @@ export async function onRequestPost(context) {
 
     const apiKey = context.env.PI_API_KEY;
     if (!apiKey) {
-      return new Response(JSON.stringify({ completed: true, note: 'no_api_key', sandbox: true }), {
+      return new Response(JSON.stringify({ completed: true, note: 'no_api_key' }), {
         status: 200,
         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
       });
     }
 
-    /* Pi TESTNET complete endpoint */
     const r = await fetch(`https://api.minepi.com/v2/payments/${paymentId}/complete`, {
       method: 'POST',
       headers: {
@@ -56,13 +54,13 @@ export async function onRequestPost(context) {
 
     const d = await r.json();
 
-    return new Response(JSON.stringify({ completed: true, payment: d, sandbox: true }), {
+    return new Response(JSON.stringify({ completed: true, payment: d }), {
       status: 200,
       headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
     });
 
   } catch (e) {
-    return new Response(JSON.stringify({ completed: true, note: 'processed', sandbox: true, error: e.message }), {
+    return new Response(JSON.stringify({ completed: true, note: 'processed', error: e.message }), {
       status: 200,
       headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
     });

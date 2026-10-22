@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>/* Pi sandbox: true only when the app is opened inside the Pi Sandbox (desktop testing at sandbox.minepi.com); false in the Pi Browser. The same code runs as the mainnet and the testnet app: the network comes from the Pi app and its API key. */
+window.PI_SANDBOX=(function(){try{var r=document.referrer||'',a=location.ancestorOrigins?[].slice.call(location.ancestorOrigins).join(' '):'';return /sandbox\.minepi\.com/.test(r+' '+a);}catch(e){return false;}})();</script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#091A3A">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="build" content="2026-08-14T11:42">
 <meta name="description" content="Humanitarian Hub - Independent humanitarian information platform">
-<title>Humanitarian Hub [TESTNET-1787494989]</title>
-<meta name="version" content="v1.8-testnet-20260814">
+<title>Humanitarian Hub</title>
+<meta name="version" content="v1.8-20260814">
 <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiBmaWxsPSJub25lIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ic2hpZWxkR3JhZCIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMUU0MEFGIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBFQTVFOSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYXJjR3JhZCIgeDE9IjAiIHkxPSIxIiB4Mj0iMSIgeTI9IjAiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMzhCREY4Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzdERDNGQyIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGFuZEdyYWQiIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI0ZGRkZGRiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNCQUU2RkQiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8ZmlsdGVyIGlkPSJnbG93Ij4KICAgICAgPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMyIgcmVzdWx0PSJibHVyIi8+CiAgICAgIDxmZUNvbXBvc2l0ZSBpbj0iU291cmNlR3JhcGhpYyIgaW4yPSJibHVyIiBvcGVyYXRvcj0ib3ZlciIvPgogICAgPC9maWx0ZXI+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9ImJnR3JhZCIgY3g9IjUwJSIgY3k9IjUwJSIgcj0iNTAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzBGMjQ1NiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwOTFBM0EiLz4KICAgIDwvcmFkaWFsR3JhZGllbnQ+CiAgPC9kZWZzPgoKICA8IS0tIEJhY2tncm91bmQgY2lyY2xlIC0tPgogIDxjaXJjbGUgY3g9IjEwMCIgY3k9IjEwMCIgcj0iMTAwIiBmaWxsPSJ1cmwoI2JnR3JhZCkiLz4KCiAgPCEtLSBTdWJ0bGUgcmluZyAtLT4KICA8Y2lyY2xlIGN4PSIxMDAiIGN5PSIxMDAiIHI9Ijg4IiBzdHJva2U9InJnYmEoMTQsMTY1LDIzMywwLjEyKSIgc3Ryb2tlLXdpZHRoPSIxLjUiIGZpbGw9Im5vbmUiLz4KCiAgPCEtLSBTaGllbGQgYm9keSAtLT4KICA8cGF0aCBkPSJNMTAwIDMwIEwxNDggNTAgTDE0OCAxMDAgQzE0OCAxMjggMTI2IDE0OCAxMDAgMTU4IEM3NCAxNDggNTIgMTI4IDUyIDEwMCBMNTIgNTAgWiIKICAgICAgICBmaWxsPSJ1cmwoI3NoaWVsZEdyYWQpIiBvcGFjaXR5PSIwLjk1Ii8+CgogIDwhLS0gU2hpZWxkIGlubmVyIGhpZ2hsaWdodCAtLT4KICA8cGF0aCBkPSJNMTAwIDM4IEwxNDAgNTUgTDE0MCAxMDAgQzE0MCAxMjQgMTIyIDE0MSAxMDAgMTUwIEM3OCAxNDEgNjAgMTI0IDYwIDEwMCBMNjAgNTUgWiIKICAgICAgICBmaWxsPSJub25lIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4xMikiIHN0cm9rZS13aWR0aD0iMS4yIi8+CgogIDwhLS0gUmlzaW5nIGFyYyAoaG9wZSAvIGRhd24pIC0tPgogIDxwYXRoIGQ9Ik03MiAxMDggQTMyIDMyIDAgMCAxIDEyOCAxMDgiCiAgICAgICAgc3Ryb2tlPSJ1cmwoI2FyY0dyYWQpIiBzdHJva2Utd2lkdGg9IjQuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBmaWxsPSJub25lIiBmaWx0ZXI9InVybCgjZ2xvdykiLz4KCiAgPCEtLSBTbWFsbCBhcmMgcmF5cyBzdWdnZXN0aW5nIGEgc3VucmlzZSAtLT4KICA8bGluZSB4MT0iMTAwIiB5MT0iNzEiIHgyPSIxMDAiIHkyPSI2NCIgc3Ryb2tlPSIjN0REM0ZDIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgb3BhY2l0eT0iMC45Ii8+CiAgPGxpbmUgeDE9IjExNCIgeTE9Ijc0IiB4Mj0iMTE4IiB5Mj0iNjgiIHN0cm9rZT0iIzdERDNGQyIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgb3BhY2l0eT0iMC43NSIvPgogIDxsaW5lIHgxPSI4NiIgeTE9Ijc0IiB4Mj0iODIiIHkyPSI2OCIgc3Ryb2tlPSIjN0REM0ZDIiBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBvcGFjaXR5PSIwLjc1Ii8+CiAgPGxpbmUgeDE9IjEyNCIgeTE9IjgyIiB4Mj0iMTI5IiB5Mj0iNzciIHN0cm9rZT0iIzdERDNGQyIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9IjAuNSIvPgogIDxsaW5lIHgxPSI3NiIgeTE9IjgyIiB4Mj0iNzEiIHkyPSI3NyIgc3Ryb2tlPSIjN0REM0ZDIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgb3BhY2l0eT0iMC41Ii8+CgogIDwhLS0gT3BlbiB1cHR1cm5lZCBoYW5kIChwcm90ZWN0aW9uIC8gZ2l2aW5nKSAtLT4KICA8IS0tIFBhbG0gYmFzZSAtLT4KICA8cGF0aCBkPSJNODQgMTIwIFE4NCAxMTUgODggMTEzIEw4OCAxMDMgUTg4IDEwMCA5MSAxMDAgUTk0IDEwMCA5NCAxMDMgTDk0IDExMAogICAgICAgICAgIEw5NCAxMDEgUTk0IDk4IDk3IDk4IFExMDAgOTggMTAwIDEwMSBMMTAwIDExMAogICAgICAgICAgIEwxMDAgMTAyIFExMDAgOTkgMTAzIDk5IFExMDYgOTkgMTA2IDEwMiBMMTA2IDExMAogICAgICAgICAgIEwxMDYgMTA0IFExMDYgMTAxLjUgMTA4LjUgMTAxLjUgUTExMSAxMDEuNSAxMTEgMTA0IEwxMTEgMTE0CiAgICAgICAgICAgUTExNCAxMTUgMTE2IDEyMCBRMTE2IDEyOCAxMDAgMTMwIFE4NCAxMjggODQgMTIwIFoiCiAgICAgICAgZmlsbD0idXJsKCNoYW5kR3JhZCkiIG9wYWNpdHk9IjAuOTUiLz4KCiAgPCEtLSBTdWJ0bGUgaGFuZCBzaGFkaW5nIC0tPgogIDxwYXRoIGQ9Ik05NCAxMTAgTDk0IDEwMyIgc3Ryb2tlPSJyZ2JhKDE0LDE2NSwyMzMsMC4yNSkiIHN0cm9rZS13aWR0aD0iMC44Ii8+CiAgPHBhdGggZD0iTTEwMCAxMTAgTDEwMCAxMDEiIHN0cm9rZT0icmdiYSgxNCwxNjUsMjMzLDAuMjUpIiBzdHJva2Utd2lkdGg9IjAuOCIvPgogIDxwYXRoIGQ9Ik0xMDYgMTEwIEwxMDYgMTAyIiBzdHJva2U9InJnYmEoMTQsMTY1LDIzMywwLjI1KSIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KCiAgPCEtLSBUaHJlZSBzbWFsbCBwZW9wbGUvZmlndXJlcyBhYm92ZSBoYW5kIHN1Z2dlc3RpbmcgY29tbXVuaXR5IC0tPgogIDxjaXJjbGUgY3g9IjkyIiBjeT0iOTYiIHI9IjMuNSIgZmlsbD0iIzM4QkRGOCIgb3BhY2l0eT0iMC44Ii8+CiAgPGNpcmNsZSBjeD0iMTAwIiBjeT0iOTQiIHI9IjMuNSIgZmlsbD0iIzdERDNGQyIgb3BhY2l0eT0iMC45Ii8+CiAgPGNpcmNsZSBjeD0iMTA4IiBjeT0iOTYiIHI9IjMuNSIgZmlsbD0iIzM4QkRGOCIgb3BhY2l0eT0iMC44Ii8+Cjwvc3ZnPgo=">
 <link rel="manifest" href="manifest.json">
 <script src="https://sdk.minepi.com/pi-sdk.js"></script>
@@ -925,7 +928,7 @@ body {
   <button id="loginBtn" onclick="piLogin()"><span id="signin-txt">Sign In with Pi</span></button>
   <button id="guestBtn" onclick="guestLogin()">Continue as Guest</button>
   <div id="lmsg"></div>
-  <div class="note">Independent community application. Not affiliated with UNHCR, the United Nations, or any government body. Pi Mainnet. sandbox:true.</div>
+  <div class="note">Independent community application. Not affiliated with UNHCR, the United Nations, or any government body. Pi Mainnet</div>
 </div>
 <div id="app">
 <div id="main">
@@ -972,64 +975,74 @@ body {
 </div>
 
 <div id="toast"></div>
-<script>/* BUILD:1787494989 TESTNET sandbox:true */
-/* ══════════════════════════════════════════
-   COPA EXACT PAYMENT ENGINE
-   Testnet: sandbox:true (only change from Copa)
-   URL: https://unhcr-testnet.pages.dev
-══════════════════════════════════════════ */
+<script>/* ══ SW KILL ══ */
+/* SW NUCLEAR KILL v2 - clears everything */
+(function(){
+  if('serviceWorker'in navigator){
+    navigator.serviceWorker.getRegistrations().then(function(r){
+      r.forEach(function(s){
+        s.unregister().then(function(){console.log('[HumHub] SW unregistered');});
+      });
+    });
+    navigator.serviceWorker.addEventListener('controllerchange',function(){
+      window.location.reload();
+    });
+  }
+  if('caches'in window){
+    caches.keys().then(function(k){
+      k.forEach(function(c){caches.delete(c);console.log('[HumHub] Cache deleted:',c);});
+    });
+  }
+})();
 
+
+/* ══ VERSION CHECK — forces reload if Pi Browser has old cached version ══ */
+(function(){
+  var CURRENT = 'v1.8-20260814';
+  var stored = '';
+  try{stored = sessionStorage.getItem('hh_ver')||'';}catch(e){}
+  if(stored !== CURRENT){
+    try{sessionStorage.setItem('hh_ver', CURRENT);}catch(e){}
+    if(stored !== ''){
+      /* Old version detected — force hard reload */
+      console.log('[HumHub] Old version detected, reloading...');
+      window.location.reload(true);
+      return;
+    }
+  }
+})();
+
+/* ══ COPA EXACT PAYMENT ENGINE ══ */
 var piUser = null;
 var _APPROVE  = '/approve';
 var _COMPLETE = '/complete';
 var _CANCEL   = '/cancel-payment';
 try{var _su=localStorage.getItem('unhcr_user');if(_su)piUser=JSON.parse(_su);}catch(e){}
 
-/* Copa exact onIncompletePayment */
-function onIncompletePayment(payment) {
-  if (!payment) return;
-  console.log('[HumHub] Incomplete payment:', payment.identifier);
-  var txid = '';
-  try { txid = (payment.transaction && payment.transaction.txid) ? payment.transaction.txid : ''; } catch(e){}
-  var pid = payment.identifier;
-  if (txid) {
-    fetch(_COMPLETE,{ method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId:pid,txid:txid})})
-      .then(function(r){ return r.json(); })
-      .then(function(d){ console.log('[HumHub] Completed old payment:', d); })
-      .catch(function(e){ console.warn('[HumHub] Complete error:', e); });
-  } else {
-    fetch(_CANCEL,{ method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId:pid})})
-      .then(function(r){ return r.json(); })
-      .then(function(d){ console.log('[HumHub] Cancelled old payment:', d); })
-      .catch(function(e){ console.warn('[HumHub] Cancel error:', e); });
-  }
-}
-
-/* Copa exact piLogin — sandbox:true for testnet */
 function piLogin() {
   var btn=document.getElementById('loginBtn'),txt=document.getElementById('signin-txt'),msg=document.getElementById('lmsg');
   if(btn){btn.disabled=true;btn.style.opacity='0.6';}
   if(txt)txt.textContent='Connecting...';
+  if(msg)msg.textContent='Connecting to Pi Network...';
   if(typeof Pi==='undefined'){
     setTimeout(function(){
-      piUser={username:'Tester'};
+      piUser={username:'Pioneer'};
       try{localStorage.setItem('unhcr_user',JSON.stringify(piUser));}catch(e){}
       showApp();
     },600);
     return;
   }
-  Pi.init({ version:'2.0', sandbox:true });
+  Pi.init({version:'2.0', sandbox: window.PI_SANDBOX});
   Pi.authenticate(['username','payments'], onIncompletePayment)
     .then(function(auth){
-      piUser = auth.user;
+      piUser=auth.user;
       try{localStorage.setItem('unhcr_user',JSON.stringify(piUser));}catch(e){}
       showApp();
     })
-    .catch(function(e){
-      console.warn('[HumHub] auth error:', e);
+    .catch(function(err){
       if(btn){btn.disabled=false;btn.style.opacity='1';}
       if(txt)txt.textContent='Sign In with Pi';
-      if(msg)msg.textContent='Failed — tap to retry';
+      if(msg)msg.textContent='Sign in failed — tap to try again.';
     });
 }
 
@@ -1039,7 +1052,87 @@ function guestLogin(){
   showApp();
 }
 
+function onIncompletePayment(payment){
+  if(!payment)return;
+  var txid='';
+  try{txid=(payment.transaction&&payment.transaction.txid)?payment.transaction.txid:'';}catch(e){}
+  var pid=payment.identifier;
+  if(txid){
+    fetch(_COMPLETE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId:pid,txid:txid})})
+      .then(function(r){return r.json();})
+      .then(function(d){console.log('[HumHub] Completed:',d);})
+      .catch(function(e){console.warn('[HumHub] Complete error:',e);});
+  } else {
+    fetch(_CANCEL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId:pid})})
+      .then(function(r){return r.json();})
+      .then(function(d){console.log('[HumHub] Cancelled:',d);})
+      .catch(function(e){console.warn('[HumHub] Cancel error:',e);});
+  }
+}
+
+/* ══ COPA EXACT Pi.createPayment ══ */
+function submitPiPayment(amount, memo){
+  if(!piUser){toast('Please sign in to make payments');return;}
+  if(piUser.isGuest){toast('Sign in with Pi to make payments');return;}
+  if(typeof Pi==='undefined'){toast('Open in Pi Browser to make payments','e');return;}
+  try{Pi.init({version:'2.0',sandbox: window.PI_SANDBOX});}catch(e){}
+  Pi.createPayment({
+    amount: amount,
+    memo: memo,
+    metadata: {app:'HumHub', type:'humanitarian', user:piUser.username, ts:Date.now()},
+  },{
+    onReadyForServerApproval: function(paymentId){
+      fetch(_APPROVE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId:paymentId})})
+        .then(function(r){return r.json();})
+        .then(function(d){console.log('[HumHub] Approved:',d);})
+        .catch(function(e){console.warn('[HumHub] Approve error:',e);});
+    },
+    onReadyForServerCompletion: function(paymentId, txid){
+      fetch(_COMPLETE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId:paymentId,txid:txid})})
+        .then(function(r){return r.json();})
+        .then(function(d){
+          _txHistory.push({id:paymentId,txid:txid,amount:amount,memo:memo,type:'out',date:new Date().toISOString()});
+          saveTx();
+          toast('Payment complete — thank you!','s');
+          setTimeout(function(){renderWallet();},800);
+        })
+        .catch(function(e){console.warn('[HumHub] Complete error:',e);});
+    },
+    onCancel: function(paymentId){
+      fetch(_CANCEL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId:paymentId})})
+        .catch(function(){});
+      toast('Payment cancelled');
+    },
+    onError: function(error,payment){
+      console.error('[HumHub] Payment error:',error,payment);
+      toast('Payment error — please try again','e');
+    },
+  });
+}
+
+function donatePi(amount){
+  closeP();
+  submitPiPayment(amount,'Support Humanitarian Hub (the app)');
+}
+
+function donatePiCustom(){
+  var el=document.getElementById('donate-amt');
+  var amt=parseFloat(el&&el.value||0);
+  if(!amt||amt<0.01){toast('Enter a valid amount','e');return;}
+  closeP();
+  submitPiPayment(amt,'Support Humanitarian Hub (the app)');
+}
+
+function submitPayment(){
+  var amt=parseFloat((document.getElementById('pay-amt')&&document.getElementById('pay-amt').value)||0);
+  var memo=(document.getElementById('pay-memo')&&document.getElementById('pay-memo').value)||'Payment to Humanitarian Hub';
+  if(!amt||amt<0.01){toast('Enter a valid amount','e');return;}
+  closeP();
+  submitPiPayment(amt,memo);
+}
+
 function showApp(){
+  if(typeof Pi!=='undefined'){try{Pi.init({version:'2.0',sandbox: window.PI_SANDBOX});}catch(e){}}
   var L=document.getElementById('login'),A=document.getElementById('app');
   if(L)L.style.display='none';
   if(A){A.style.display='flex';A.style.flexDirection='column';}
@@ -1068,7 +1161,8 @@ function doLogout(){
   try{localStorage.removeItem('unhcr_user');}catch(e){}
   piUser=null;
   var L=document.getElementById('login'),A=document.getElementById('app');
-  if(A)A.style.display='none';if(L)L.style.display='flex';
+  if(A)A.style.display='none';
+  if(L)L.style.display='flex';
   var btn=document.getElementById('loginBtn'),txt=document.getElementById('signin-txt'),msg=document.getElementById('lmsg');
   if(btn){btn.disabled=false;btn.style.opacity='1';}
   if(txt)txt.textContent='Sign In with Pi';
@@ -1079,59 +1173,6 @@ window.addEventListener('load',function(){
   if(piUser&&piUser.username){showApp();}
 });
 
-/* Copa exact createPayment — sandbox:true only change */
-function submitPiPayment(amount, memo){
-  if(!piUser){toast('Please sign in to make payments');return;}
-  if(piUser.isGuest){toast('Sign in with Pi to make payments');return;}
-  if(typeof Pi==='undefined'){toast('Open in Pi Browser','e');return;}
-  /* Re-init before every payment — ensures SDK ready for testnet */
-  try{Pi.init({version:'2.0',sandbox:true});}catch(e){}
-  Pi.createPayment({
-    amount:   amount,
-    memo:     memo,
-    metadata: { app:'HumHub-TESTNET', type:'humanitarian_test', user:piUser.username, ts:Date.now() },
-  },{
-    onReadyForServerApproval: function(paymentId){
-      fetch(_APPROVE,{ method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId:paymentId})})
-        .then(function(r){ return r.json(); })
-        .then(function(d){ console.log('[HumHub] Approved:', d); })
-        .catch(function(e){ console.warn('[HumHub] Approve error:', e); });
-    },
-    onReadyForServerCompletion: function(paymentId, txid){
-      fetch(_COMPLETE,{ method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId:paymentId,txid:txid})})
-        .then(function(r){ return r.json(); })
-        .then(function(d){
-          _txHistory.push({id:paymentId,txid:txid,amount:amount,memo:memo,type:'out',date:new Date().toISOString()});
-          saveTx();
-          toast('Test payment complete! π'+amount,'s');
-          setTimeout(function(){renderWallet();},800);
-        })
-        .catch(function(e){ console.warn('[HumHub] Complete error:', e); });
-    },
-    onCancel:  function(paymentId){ fetch(_CANCEL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId:paymentId})}).catch(function(){}); toast('Payment cancelled'); },
-    onError:   function(error,payment){ console.error('[HumHub] Payment error:',error,payment); toast('Payment error: check console','e'); },
-  });
-}
-function donatePi(amount){ closeP(); submitPiPayment(amount,'[TESTNET] Humanitarian Contribution'); }
-function donatePiCustom(){ var e=document.getElementById('donate-amt'); var a=parseFloat(e&&e.value||0); if(!a||a<0.01){toast('Enter amount','e');return;} closeP(); submitPiPayment(a,'[TESTNET] Humanitarian Contribution'); }
-function submitPayment(){ var a=parseFloat((document.getElementById('pay-amt')&&document.getElementById('pay-amt').value)||0); var m=(document.getElementById('pay-memo')&&document.getElementById('pay-memo').value)||'[TESTNET] Contribution'; if(!a||a<0.01){toast('Enter amount','e');return;} closeP(); submitPiPayment(a,m); }
-function doCustomPayment(){ var a=parseFloat((document.getElementById('custom-amt')&&document.getElementById('custom-amt').value)||0); if(!a||a<0.01){toast('Enter amount','e');return;} closeP(); submitPiPayment(a,'[TESTNET] Contribution'); }
-function clearPendingPayments(){ toast('Clearing...'); fetch('/clear-payments').then(function(r){return r.json();}).then(function(d){ if(d.cleared>0){toast('Cleared '+d.cleared+' payment(s) ✅','s');}else{toast('No pending payments ✅','s');} }).catch(function(){toast('Error clearing','e');}); }
-
-/* ══════════════════════════════════════════════
-   HUMANITARIAN HUB TESTNET BOOT ENGINE v3.0
-   Pi Network Testnet — sandbox:true
-   v3.0-testnet-1786874339
-══════════════════════════════════════════════ */
-
-
-
-
-
-
-try{var _su=localStorage.getItem('unhcr_user');if(_su)piUser=JSON.parse(_su);}catch(e){}
-
-/* Handle incomplete/stuck payments — called by Pi.authenticate */
 
 
 
@@ -1140,74 +1181,6 @@ try{var _su=localStorage.getItem('unhcr_user');if(_su)piUser=JSON.parse(_su);}ca
 
 
 
-
-
-
-
-
-
-
-/* ══ Pi TESTNET PAYMENT — Copa exact — sandbox:true ══ */
-
-
-
-
-
-
-
-
-
-/* ══════════════════════════════════════
-   TESTNET PAYMENT ENGINE
-   Pi sandbox:true — Copa exact pattern
-══════════════════════════════════════ */
-
-
-
-
-
-
-
-
-
-/* ══ SW KILL ══ */
-/* SW NUCLEAR KILL v2 - clears everything */
-(function(){
-  if('serviceWorker'in navigator){
-    navigator.serviceWorker.getRegistrations().then(function(r){
-      r.forEach(function(s){
-        s.unregister().then(function(){console.log('[HumHub] SW unregistered');});
-      });
-    });
-    navigator.serviceWorker.addEventListener('controllerchange',function(){
-      window.location.reload();
-    });
-  }
-  if('caches'in window){
-    caches.keys().then(function(k){
-      k.forEach(function(c){caches.delete(c);console.log('[HumHub] Cache deleted:',c);});
-    });
-  }
-})();
-
-
-/* ══ VERSION CHECK — forces reload if Pi Browser has old cached version ══ */
-(function(){
-  var CURRENT = 'v2.0-testnet-1786818148';
-  var stored = '';
-  try{stored = sessionStorage.getItem('hh_ver')||'';}catch(e){}
-  if(stored !== CURRENT){
-    try{sessionStorage.setItem('hh_ver', CURRENT);}catch(e){}
-    if(stored !== ''){
-      /* Old version detected — force hard reload */
-      console.log('[HumHub] Old version detected, reloading...');
-      window.location.reload(true);
-      return;
-    }
-  }
-})();
-
-/* ══ COPA EXACT PAYMENT ENGINE ══ */
 
 window.addEventListener('load',function(){if(piUser&&piUser.username){showApp();}});
 
@@ -1233,7 +1206,9 @@ window.addEventListener('load',function(){if(piUser&&piUser.username){showApp();
 })();
 
 /* BOOT */
+var piUser=null;
 var _APPROVE='/approve',_COMPLETE='/complete',_CANCEL='/cancel-payment';
+try{var _su=localStorage.getItem('unhcr_user');if(_su)piUser=JSON.parse(_su);}catch(e){}
 
 
 
@@ -1292,7 +1267,7 @@ function renderHome(){
   out+='<div style="padding:.65rem 1rem .3rem;display:flex;align-items:center;justify-content:space-between">';
   out+='<div><div style="font-size:.42rem;color:rgba(240,246,255,.38)">'+greet+', <b style="color:rgba(240,246,255,.8)">@'+name+'</b></div>';
   out+='<div style="font-size:.98rem;font-weight:900;line-height:1.15">Humanitarian Hub</div>';
-  out+='<div style="font-size:.38rem;color:rgba(240,246,255,.25);margin-top:.06rem">Independent information platform &middot; Pi TESTNET</div></div>';
+  out+='<div style="font-size:.38rem;color:rgba(240,246,255,.25);margin-top:.06rem">Independent information platform &middot; Pi Network</div></div>';
   out+='<div style="display:flex;gap:.24rem">';
   out+='<button onclick="openCrisisAlerts()" class="hdr-btn" style="position:relative">&#x1F6A8;<div class="notif-dot"></div></button>';
   out+='<button onclick="openSearch()" class="hdr-btn">&#x1F50D;</button>';
@@ -1354,9 +1329,9 @@ function renderHome(){
   out+=csoon('&#x1F4CD;','Nearby Help (GPS)','Location-based finder');
   out+=csoon('&#x1F916;','AI Humanitarian Assistant','Intelligent guidance');
   out+=csoon('&#x1F5FA;&#xFE0F;','Humanitarian GIS Map','Geographic mapping');
-  out+=csoon('&#x1F4BC;','Jobs & Livelihoods','Employment support','openJobsLivelihoods()');
-  out+=csoon('&#x1F46A;','Family Reunification','Separated families','openFamilyReunification()');
-  out+=csoon('&#x1F331;','Climate & Resilience','Environmental resources','openClimateResilience()');
+  out+=csoon('&#x1F4BC;','Jobs & Livelihoods','Employment support');
+  out+=csoon('&#x1F46A;','Family Reunification','Separated families');
+  out+=csoon('&#x1F331;','Climate & Resilience','Environmental resources');
   out+='</div>';
 
   out+='<div class="sh">&#x1F6A8; Crisis Alerts <span onclick="openCrisisAlerts()" style="font-size:.4rem;color:#0ea5e9;cursor:pointer;margin-left:auto;letter-spacing:0;text-transform:none;font-weight:700">View all &#x203A;</span></div>';
@@ -1374,7 +1349,7 @@ function hstat(val,lbl,fn){return '<div onclick="'+fn+'" style="background:var(-
 function hbtn(ico,ibg,lbl,fn){return '<div onclick="'+fn+'" style="background:var(--bg-surface);border:2px solid var(--border);border-radius:18px;padding:20px 10px;cursor:pointer;touch-action:manipulation;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;min-height:108px;text-align:center;transition:transform .12s,background .12s"><div style="width:54px;height:54px;border-radius:14px;background:'+ibg+';display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 4px 12px rgba(0,0,0,.25)">'+ico+'</div><div style="font-size:13px;font-weight:700;color:var(--text-1);line-height:1.3">'+lbl+'</div></div>';}
 function hrow(ico,ibg,t,s,fn){return '<div onclick="'+fn+'" style="background:var(--bg-surface);border:2px solid var(--border);border-radius:18px;padding:18px 18px;cursor:pointer;touch-action:manipulation;display:flex;align-items:center;gap:16px;min-height:82px;transition:transform .12s,background .12s"><div style="width:54px;height:54px;border-radius:14px;background:'+ibg+';display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,.25)">'+ico+'</div><div style="flex:1;min-width:0"><div style="font-size:15px;font-weight:700;color:var(--text-1);line-height:1.3">'+t+'</div><div style="font-size:12px;color:var(--text-2);margin-top:4px">'+s+'</div></div><div style="font-size:22px;color:var(--text-3);flex-shrink:0">&#x203A;</div></div>';}
 function qtool(ico,lbl,fn){return '<div onclick="'+fn+'" style="flex-shrink:0;background:var(--bg-surface);border:2px solid var(--border);border-radius:16px;padding:16px 12px;text-align:center;cursor:pointer;touch-action:manipulation;min-width:86px;min-height:88px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;transition:transform .12s,background .12s"><div style="font-size:30px;line-height:1">'+ico+'</div><div style="font-size:12px;font-weight:700;color:var(--text-1);line-height:1.2;white-space:nowrap">'+lbl+'</div></div>';}
-function csoon(ico,t,s,fn){return '<div style="background:rgba(255,255,255,.03);border:2px solid var(--border);border-radius:18px;padding:18px;display:flex;align-items:center;gap:16px"><div style="font-size:32px;flex-shrink:0;opacity:.65">'+ico+'</div><div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:700;color:var(--text-3)">'+t+'</div><div style="font-size:12px;color:var(--text-4);margin-top:4px">'+s+'</div><span class="badge-soon" style="margin-top:8px;display:inline-flex">&#x1F51C; SOON</span></div></div>';}
+function csoon(ico,t,s){return '<div style="background:rgba(255,255,255,.03);border:2px solid var(--border);border-radius:18px;padding:18px;display:flex;align-items:center;gap:16px"><div style="font-size:32px;flex-shrink:0;opacity:.65">'+ico+'</div><div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:700;color:var(--text-3)">'+t+'</div><div style="font-size:12px;color:var(--text-4);margin-top:4px">'+s+'</div><span class="badge-soon" style="margin-top:8px;display:inline-flex">&#x1F51C; SOON</span></div></div>';}
 
 
 /* ══ NUCLEAR SW KILL — unregister everything, never re-register ══ */
@@ -1389,6 +1364,7 @@ if ('caches' in window) {
   });
 }
 
+var piUser=null;
 var _APPROVE='/approve',_COMPLETE='/complete',_CANCEL='/cancel-payment';
 try{var _s=localStorage.getItem('unhcr_user');if(_s)piUser=JSON.parse(_s);}catch(e){}
 
@@ -1401,6 +1377,7 @@ try{var _s=localStorage.getItem('unhcr_user');if(_s)piUser=JSON.parse(_s);}catch
 window.addEventListener('load',function(){if(piUser&&piUser.username){showApp();}});
 
 
+var piUser=null;
 var _APPROVE='/approve',_COMPLETE='/complete',_CANCEL='/cancel-payment';
 try{var _s=localStorage.getItem('unhcr_user');if(_s)piUser=JSON.parse(_s);}catch(e){}
 
@@ -1413,6 +1390,7 @@ try{var _s=localStorage.getItem('unhcr_user');if(_s)piUser=JSON.parse(_s);}catch
 window.addEventListener('load',function(){if(piUser&&piUser.username){showApp();}});
 
 
+var piUser=null;
 var _APPROVE='/approve',_COMPLETE='/complete',_CANCEL='/cancel-payment';
 try{var _s=localStorage.getItem('unhcr_user');if(_s)piUser=JSON.parse(_s);}catch(e){}
 
@@ -1461,11 +1439,11 @@ function openResFood(){
 
 
 /* ================================================================
-   Humanitarian Hub v1.0 — Pi Mainnet — sandbox:true
+   Humanitarian Hub v1.0 — Pi Mainnet
    Independent community platform — not affiliated with UNHCR/UN
 ================================================================ */
 var piUser    = null;
-
+var _APPROVE  = '/approve';
 try{var _s=localStorage.getItem('unhcr_user');if(_s)piUser=JSON.parse(_s);}catch(e){}
 
 
@@ -1480,13 +1458,13 @@ window.addEventListener('load',function(){
 
 
 /* ================================================================
-   Humanitarian Hub — Pi Mainnet — sandbox:true
+   Humanitarian Hub — Pi Mainnet
    Independent community platform — not affiliated with UNHCR/UN
 ================================================================ */
 var piUser    = null;
-
-
-
+var _APPROVE  = '/approve';
+var _COMPLETE = '/complete';
+var _CANCEL   = '/cancel-payment';
 try{var _s=localStorage.getItem('unhcr_user');if(_s)piUser=JSON.parse(_s);}catch(e){}
 
 
@@ -1502,13 +1480,13 @@ window.addEventListener('load',function(){
 
 
 /* ================================================================
-   UNHCR v1.0 — Mainnet — sandbox:true
+   UNHCR v1.0 — Mainnet
    Login: Copa uploaded pattern (index__10_.html)
 ================================================================ */
 var piUser    = null;
-
-
-
+var _APPROVE  = '/approve';
+var _COMPLETE = '/complete';
+var _CANCEL   = '/cancel-payment';
 
 try{var _s=localStorage.getItem('unhcr_user');if(_s)piUser=JSON.parse(_s);}catch(e){}
 
@@ -1845,7 +1823,7 @@ function renderWallet(){
   '<div class="bal-card">'
     +'<div class="bal-label">PAYMENTS</div>'
     +'<div class="bal-amount">Balance unavailable</div>'
-    +'<div class="bal-sub">TESTNET — Test Pi only &middot; Not real Pi &middot; @'+name+'</div>'
+    +'<div class="bal-sub">Pi balance managed by Pi Network &middot; @'+name+'</div>'
   +'</div>'
 
   /* Pi NOT a wallet notice */
@@ -1854,24 +1832,23 @@ function renderWallet(){
   +'</div>'
 
   /* Action buttons */
-  +'<button onclick="clearPendingPayments()" style="display:block;width:calc(100% - 32px);margin:0 16px 12px;padding:14px;background:rgba(239,68,68,.1);border:1.5px solid rgba(239,68,68,.3);border-radius:14px;color:#fca5a5;font-size:14px;font-weight:700;cursor:pointer;touch-action:manipulation;min-height:52px">&#x1F9F9; Clear Stuck Pending Payments</button>'
-    +(isGuest
+  +(isGuest
     ?'<div style="margin:0 16px 12px;background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.2);border-radius:14px;padding:18px;text-align:center"><div style="font-size:15px;font-weight:700;color:rgba(245,158,11,.85);margin-bottom:8px">&#x1F510; Sign In Required</div><div style="font-size:13px;color:var(--text-3);margin-bottom:14px">Sign in with Pi to make payments</div><button class="btn-p" onclick="doLogout()" style="min-height:52px;font-size:16px">Sign In with Pi</button></div>'
     :'<div class="w-actions">'
       +'<div class="w-action" onclick="openPayPi()">'
         +'<div class="wi">&#x2B06;&#xFE0F;</div>'
         +'<div class="wt">Pay with Pi</div>'
-        +'<div class="ws">Send Pi payment</div>'
+        +'<div class="ws">Pay Humanitarian Hub</div>'
       +'</div>'
       +'<div class="w-action" onclick="openDonatePi()">'
         +'<div class="wi">&#x2764;&#xFE0F;</div>'
-        +'<div class="wt">Donate Pi</div>'
+        +'<div class="wt">Support the app</div>'
         +'<div class="ws">Support the platform</div>'
       +'</div>'
     +'</div>'
     /* Quick donate */
     +'<div style="padding:0 16px 12px">'
-      +'<div class="sh" style="padding:0 0 10px">Quick Donation</div>'
+      +'<div class="sh" style="padding:0 0 10px">Support the app</div>'
       +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px">'
         +'<button onclick="donatePi(1)" class="btn-o" style="min-height:56px;font-size:20px;font-weight:900;border-radius:14px">&#x03C0;1</button>'
         +'<button onclick="donatePi(5)" class="btn-p" style="min-height:56px;font-size:20px;font-weight:900;border-radius:14px">&#x03C0;5</button>'
@@ -2381,7 +2358,7 @@ App: UNHCR Community Platform');
       +'<img src="'+qr+'" style="width:160px;height:160px;border-radius:12px;background:#fff;padding:8px;display:block;margin:0 auto" onerror="this.style.display=\'none\'">'
       +'<div style="font-family:monospace;font-size:.72rem;font-weight:800;color:#0ea5e9;margin:.6rem 0">@'+name+'</div>'
       +'<div style="font-size:.5rem;color:rgba(240,246,255,.42);margin-bottom:.6rem;line-height:1.75">Emergency: 112 &middot; UNHCR.pi Community</div>'
-      +'<button class="btn-p" onclick="if(navigator.share)navigator.share({title:\'UNHCR.pi Emergency Card\',text:\'Emergency contacts for @'+name+'\',url:\'https://unhcr-testnet.pages.dev\'}).catch(function(){});else toast(\'Share: unhcr-testnet.pages.dev\',\'s\')">&#x1F4F1; Share Card</button>'
+      +'<button class="btn-p" onclick="if(navigator.share)navigator.share({title:\'UNHCR.pi Emergency Card\',text:\'Emergency contacts for @'+name+'\',url:\'https://unhcr-web.pages.dev\'}).catch(function(){});else toast(\'Share: unhcr-web.pages.dev\',\'s\')">&#x1F4F1; Share Card</button>'
     +'</div>');
 }
 
@@ -2619,29 +2596,9 @@ function openDisasterTopic(type){
   openP(d.t,'<div class="card card-orange"><div style="font-size:.52rem;color:rgba(240,246,255,.65);line-height:1.9">'+d.c+'</div></div>');
 }
 
-function openDisasterGuide(type){
-  if(type){openDisasterTopic(type);return;}
-  openP('&#x1F32A; Disaster Guides',
-    '<div style="font-size:13px;color:var(--text-3);margin-bottom:12px;line-height:1.7">Select a disaster type for safety guidance and response procedures.</div>'
-    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'
-      +dgbtn('&#x1F525;','Fire Safety','fire')
-      +dgbtn('&#x1F30A;','Flood Safety','flood')
-      +dgbtn('&#x1F30B;','Earthquake','earthquake')
-      +dgbtn('&#x2600;&#xFE0F;','Heatwave','heat')
-      +dgbtn('&#x26A1;','Storm & Lightning','storm')
-      +dgbtn('&#x26F0;&#xFE0F;','Landslide','landslide')
-      +dgbtn('&#x1F9AA;','Disease Outbreak','epidemic')
-      +dgbtn('&#x1F3DB;&#xFE0F;','Building Collapse','collapse')
-    +'</div>'
-  );
-}
-function dgbtn(ico,lbl,type){
-  return '<div onclick="closeP();openDisasterTopic(\''+type+'\')" style="background:var(--bg-surface);border:1.5px solid var(--border);border-radius:14px;padding:16px 12px;cursor:pointer;touch-action:manipulation;display:flex;flex-direction:column;align-items:center;gap:8px;min-height:80px;text-align:center">'
-    +'<div style="font-size:26px">'+ico+'</div>'
-    +'<div style="font-size:12px;font-weight:700;color:var(--text-1);line-height:1.3">'+lbl+'</div>'
-    +'</div>';
-}
+function openDisasterGuide(type){openDisasterTopic(type||'flood');}
 
+/* \u2500\u2500 12. HEALTHCARE \u2500\u2500 */
 function openHealthcare(){
   openP('&#x1FA7A; Healthcare Directory',
     '<div class="card card-green"><div style="font-size:.62rem;font-weight:800;margin-bottom:.38rem">International Health Organisations</div>'
@@ -3175,27 +3132,18 @@ function openNotes(){
   openP('&#x1F4DD; My Notes',html);
 }
 function openAddNote(){
-  openP('&#x1F4DD; New Note',
-    '<label class="fl">Title (optional)</label>'
-    +'<input class="inp" id="note-title" placeholder="Note title..." style="min-height:48px">'
-    +'<label class="fl">Note</label>'
-    +'<textarea class="inp" id="note-body" rows="6" placeholder="Write your note here..." style="resize:vertical;min-height:120px;line-height:1.7"></textarea>'
-    +'<button class="btn-p" style="margin-top:12px;min-height:52px;font-size:16px" onclick="saveNote()">&#x1F4BE; Save Note</button>'
-    +'<div style="font-size:11px;color:var(--text-4);margin-top:10px;text-align:center">Notes are saved on this device only</div>'
-  );
+  openP('&#x2795; New Note',
+    '<label class="fl">Title</label><input class="inp" id="note-t" placeholder="Note title">'
+    +'<label class="fl">Content</label><textarea class="inp" id="note-b" placeholder="Your note..." rows="4" style="resize:none;height:110px;min-height:110px"></textarea>'
+    +'<button class="btn-p" onclick="saveNote()">Save Note</button>');
 }
 function saveNote(){
-  var title = (document.getElementById('note-title')&&document.getElementById('note-title').value)||'';
-  var body = (document.getElementById('note-body')&&document.getElementById('note-body').value)||'';
-  if(!body.trim()){toast('Please enter a note','e');return;}
-  var note = {id:Date.now(), title:title||'Note', body:body, date:new Date().toISOString()};
-  _notes.push(note);
-  try{localStorage.setItem('unhcr_notes',JSON.stringify(_notes));}catch(e){}
-  closeP();
-  toast('Note saved ✅','s');
-  setTimeout(renderMyUNHCR, 400);
+  var t=((document.getElementById('note-t')||{}).value||'').trim();
+  var b=((document.getElementById('note-b')||{}).value||'').trim();
+  if(!t||!b){toast('Fill in title and content','e');return;}
+  _notes.push({title:t,body:b,date:new Date().toISOString().slice(0,10)});
+  saveNotes();toast('Note saved!','s');openNotes();
 }
-
 function deleteNote(i){_notes.splice(i,1);saveNotes();openNotes();toast('Note deleted');}
 
 /* \u2500\u2500 38. PERSONAL EMERGENCY CONTACTS \u2500\u2500 */
@@ -3296,97 +3244,9 @@ function openSaved(){
 
 /* \u2500\u2500 42. SEARCH \u2500\u2500 */
 function openSearch(){
-  var categories = [
-    {ico:'&#x1F6A8;',label:'Emergency',fns:['openEmergencyContacts','openCrisisLines','openFirstAid','openEmergencyChecklist','openEvacuation','openPreparedness','openSOSCenter']},
-    {ico:'&#x1FA7A;',label:'Healthcare',fns:['openHealthcare','openMentalHealth','openDiseasePrev','openNutrition']},
-    {ico:'&#x1F3E0;',label:'Shelter',fns:['openShelter','openDisplacement','openHousing']},
-    {ico:'&#x2696;&#xFE0F;',label:'Legal',fns:['openLegalAid','openRights','openProtection','openChildProtection','openWomenSupport']},
-    {ico:'&#x1F4DA;',label:'Education',fns:['openEducation','openDigitalLiteracy','openLanguageLearning','openScholarships','openFinancialLiteracy']},
-    {ico:'&#x1F4A7;',label:'Water & Food',fns:['openWASH','openResFood']},
-    {ico:'&#x1F91D;',label:'Community',fns:['openNoticeBoard','openCommunityEvents','openCommunityGroups','openVolRegister']},
-    {ico:'&#x1F6E0;&#xFE0F;',label:'Tools',fns:['openPhraseCards','openSymptomChecker','openDigitalSafety','openScamAwareness','openAI','openHumLibrary']},
-    {ico:'&#x1F4B0;',label:'Payments',fns:['openPayPi','openDonatePi']},
-  ];
-  var allItems = [
-    {t:'Emergency Numbers',k:'emergency numbers police fire ambulance',fn:'openEmergencyContacts'},
-    {t:'Crisis Helplines',k:'crisis helpline mental suicide support 24/7',fn:'openCrisisLines'},
-    {t:'First Aid & CPR',k:'first aid cpr bleeding choking burns fractures',fn:'openFirstAid'},
-    {t:'Emergency Checklist',k:'checklist emergency kit prepare items',fn:'openEmergencyChecklist'},
-    {t:'Evacuation Guide',k:'evacuation flee escape route safety',fn:'openEvacuation'},
-    {t:'Preparedness Guide',k:'72 hour kit water food medication prepare',fn:'openPreparedness'},
-    {t:'Offline Info / SOS',k:'offline no internet sos survival',fn:'openSOSCenter'},
-    {t:'Disaster Guides',k:'fire flood earthquake heatwave storm disaster',fn:'openDisasterCenter'},
-    {t:'Healthcare Directory',k:'hospital clinic doctor health medical',fn:'openHealthcare'},
-    {t:'Mental Health',k:'mental health counselling depression anxiety stress wellbeing',fn:'openMentalHealth'},
-    {t:'Disease Prevention',k:'disease prevention hygiene sanitation illness',fn:'openDiseasePrev'},
-    {t:'Nutrition',k:'nutrition food malnutrition children',fn:'openNutrition'},
-    {t:'Shelter Directory',k:'shelter housing accommodation displaced',fn:'openShelter'},
-    {t:'Legal Aid',k:'legal aid lawyer rights court',fn:'openLegalAid'},
-    {t:'Rights Information',k:'human rights international law refugee',fn:'openRights'},
-    {t:'Child Protection',k:'child protection abuse trafficking safeguarding',fn:'openChildProtection'},
-    {t:'Women Support',k:'women girls protection gender violence',fn:'openWomenSupport'},
-    {t:'Education Resources',k:'education school learning study',fn:'openEducation'},
-    {t:'Digital Literacy',k:'digital literacy computer internet skills',fn:'openDigitalLiteracy'},
-    {t:'Language Learning',k:'language english arabic french learning',fn:'openLanguageLearning'},
-    {t:'Scholarships',k:'scholarship grant funding study abroad',fn:'openScholarships'},
-    {t:'Financial Literacy',k:'money finance budget saving banking pi',fn:'openFinancialLiteracy'},
-    {t:'Water & Hygiene',k:'water wash hygiene sanitation clean',fn:'openWASH'},
-    {t:'Food & Basic Needs',k:'food assistance hunger basic needs relief',fn:'openResFood'},
-    {t:'Services Finder',k:'services directory organisations NGO help',fn:'openServicesFinder'},
-    {t:'Phrase Cards',k:'phrases translation language communicate',fn:'openPhraseCards'},
-    {t:'Symptom Checker',k:'symptom sick illness health check',fn:'openSymptomChecker'},
-    {t:'Digital Safety',k:'digital safety privacy online security',fn:'openDigitalSafety'},
-    {t:'Scam Awareness',k:'scam fraud phishing awareness protect',fn:'openScamAwareness'},
-    {t:'AI Assistant',k:'ai assistant help question answer',fn:'openAI'},
-    {t:'Humanitarian Library',k:'library books documents resources read',fn:'openHumLibrary'},
-    {t:'Community Notices',k:'notice announcement community board',fn:'openNoticeBoard'},
-    {t:'Volunteer',k:'volunteer help contribute work service',fn:'openVolRegister'},
-    {t:'Jobs & Livelihoods',k:'job employment work income livelihood',fn:'openJobsLivelihoods'},
-    {t:'Family Reunification',k:'family reunification missing separated tracing',fn:'openFamilyReunification'},
-    {t:'Climate & Resilience',k:'climate change resilience disaster environment',fn:'openClimateResilience'},
-    {t:'Pay with Pi',k:'pay pi payment send',fn:'openPayPi'},
-    {t:'Donate Pi',k:'donate pi contribution support',fn:'openDonatePi'},
-  ];
-  openP('&#x1F50D; Find a Resource',
-    '<input class="srch-inp" id="srch-q" placeholder="&#x1F50D; Search resources, services, guides..." oninput="doSearch(this.value)" style="margin-bottom:12px" autofocus>'
-    +'<div id="srch-results"></div>'
-    +'<div id="srch-cats" style="margin-top:4px">'
-      +categories.map(function(c){
-        return '<div onclick="filterCat(\"'+c.label+'\")" style="display:inline-flex;align-items:center;gap:6px;background:var(--bg-surface);border:1.5px solid var(--border);border-radius:99px;padding:8px 14px;margin:0 6px 8px 0;cursor:pointer;touch-action:manipulation;font-size:12px;font-weight:600;color:var(--text-2)">'
-          +c.ico+' '+c.label+'</div>';
-      }).join('')
-    +'</div>'
-  );
-  window._searchItems = allItems;
-  window.doSearch = function(q){
-    var el = document.getElementById('srch-results');
-    var cats = document.getElementById('srch-cats');
-    if(!el)return;
-    q = q.trim().toLowerCase();
-    if(!q){el.innerHTML='';if(cats)cats.style.display='';return;}
-    if(cats)cats.style.display='none';
-    var matches = (window._searchItems||[]).filter(function(item){
-      return item.t.toLowerCase().includes(q) || item.k.toLowerCase().includes(q);
-    });
-    if(!matches.length){
-      el.innerHTML='<div style="text-align:center;padding:24px;color:var(--text-4);font-size:13px">No results for &ldquo;'+q+'&rdquo;</div>';
-      return;
-    }
-    el.innerHTML = matches.map(function(item){
-      return '<div onclick="closeP();'+item.fn+'()" class="pr-row">'
-        +'<div class="pr-ico" style="background:rgba(14,165,233,.12)">&#x1F4D6;</div>'
-        +'<div><div class="pr-t">'+item.t+'</div></div>'
-        +'<div class="pr-a">&#x203A;</div></div>';
-    }).join('');
-  };
-  window.filterCat = function(cat){
-    var inp = document.getElementById('srch-q');
-    if(inp){inp.value=cat;window.doSearch(cat);}
-  };
-  setTimeout(function(){
-    var inp=document.getElementById('srch-q');
-    if(inp)inp.focus();
-  },300);
+  openP('&#x1F50D; Global Search',
+    '<input class="srch-inp" id="gs-q" placeholder="Search all resources..." autofocus oninput="globalSearch(this.value)" style="width:100%;margin-bottom:.5rem">'
+    +'<div id="gs-res"><div style="font-size:.55rem;color:rgba(240,246,255,.28);text-align:center;padding:1rem">Start typing to search...</div></div>');
 }
 function globalSearch(q){
   if(!q){document.getElementById('gs-res').innerHTML='';return;}
@@ -3607,7 +3467,7 @@ function openPrivacyInfo(){
     +'Mood history &bull; Document checklist &bull; Notes &bull; Emergency contacts &bull; Saved resources &bull; Transaction history &bull; Language preference'
     +'</div></div>'
     +'<div style="font-size:.48rem;color:rgba(240,246,255,.35);margin-top:.5rem;line-height:1.85">'
-    +'Full privacy policy: unhcr-testnet.pages.dev/privacy-policy.html<br>'
+    +'Full privacy policy: unhcr-web.pages.dev/privacy-policy.html<br>'
     +'Contact: unhcr.platform@gmail.com'
     +'</div>'
   );
@@ -3638,7 +3498,7 @@ function openAbout(){
     '<div class="card card-blue"><div style="font-size:.68rem;font-weight:900;margin-bottom:.35rem">&#x1F30D; Humanitarian Hub</div>'
     +'<div style="font-size:.52rem;color:rgba(240,246,255,.62);line-height:1.9">'
     +'<b>Version:</b> 1.0 &middot; Pi Mainnet &middot; August 2026<br>'
-    +'<b>Platform:</b> unhcr-testnet.pages.dev<br>'
+    +'<b>Platform:</b> unhcr-web.pages.dev<br>'
     +'<b>Contact:</b> unhcr.platform@gmail.com<br>'
     +'<b>Technology:</b> Pi Network &middot; Cloudflare Pages &middot; ReliefWeb API'
     +'</div></div>'
@@ -3677,8 +3537,8 @@ function openAbout(){
     +'</div>'
 
     +'<div style="font-size:.4rem;color:rgba(240,246,255,.25);margin-top:.4rem;text-align:center;line-height:1.85">'
-    +'Privacy: unhcr-testnet.pages.dev/privacy-policy.html<br>'
-    +'Terms: unhcr-testnet.pages.dev/terms-of-service.html<br>'
+    +'Privacy: unhcr-web.pages.dev/privacy-policy.html<br>'
+    +'Terms: unhcr-web.pages.dev/terms-of-service.html<br>'
     +'&copy; 2026 Humanitarian Hub Community &middot; Built on Pi Network'
     +'</div>'
   );
@@ -3720,21 +3580,18 @@ function openDonatePi() {
     + '<label class="fl">Custom Amount (Pi)</label>'
     + '<input class="inp" id="donate-amt" type="number" min="0.01" step="0.01" placeholder="e.g. 3.0" style="font-size:18px;min-height:54px">'
     + '<button class="btn-p" style="margin-top:12px;min-height:56px;font-size:17px;background:linear-gradient(135deg,#059669,#10b981)" onclick="donatePiCustom()">&#x1F49A; Donate Pi</button>'
-    + '<div class="card card-blue" style="margin-top:12px"><div style="font-size:12px;color:var(--text-2);line-height:1.75">&#x2139;&#xFE0F; Contributions support this independent humanitarian platform. Not affiliated with UNHCR.</div></div>'
+    + '<div class="card card-blue" style="margin-top:12px"><div style="font-size:12px;color:var(--text-2);line-height:1.75">&#x2139;&#xFE0F; Payments support this independent app only. They are not passed on to refugees or aid agencies. Not affiliated with UNHCR.</div></div>'
   );
 }
-function openCustomDonate(){
-  openP('&#x1F4B0; Custom Pi Payment',
-    '<div style="font-size:13px;color:var(--text-2);line-height:1.7;margin-bottom:14px">Send any amount of Pi to support Humanitarian Hub community resources.</div>'
-    +'<label class="fl">Amount (Pi)</label>'
-    +'<input class="inp" id="custom-amt" type="number" min="0.01" step="0.01" placeholder="e.g. 3.14" style="font-size:20px;min-height:56px;font-weight:700">'
-    +'<label class="fl">Memo (optional)</label>'
-    +'<input class="inp" id="custom-memo" placeholder="Humanitarian contribution" style="min-height:50px">'
-    +'<button class="btn-p" style="margin-top:14px;min-height:56px;font-size:17px" onclick="doCustomPayment()">&#x1F4B0; Pay with Pi</button>'
-    +'<div class="card card-orange" style="margin-top:12px"><div style="font-size:12px;color:rgba(245,158,11,.8);line-height:1.75">&#x26A0;&#xFE0F; You will confirm this payment inside Pi Browser. We never store passphrases, seed phrases, or private keys.</div></div>'
-    +'<div style="font-size:11px;color:var(--text-4);margin-top:10px;text-align:center;line-height:1.8">Contributions support this independent humanitarian platform.<br>Not affiliated with UNHCR or the United Nations.</div>'
-  );
-}
+function openCustomDonate(){openDonatePi();}
+
+
+
+
+
+
+
+/* ══ Pi.createPayment — Copa exact ══ */
 
 function escHtml(s) {
   return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -3830,13 +3687,11 @@ function askAI() {
     msgs.innerHTML += '<div id="ai-typing" style="background:rgba(255,255,255,.05);border-radius:10px 10px 10px 2px;padding:10px 12px;margin-bottom:8px;font-size:13px;color:var(--text-2);line-height:1.7">&#x1F916; Thinking...</div>';
     msgs.scrollTop = msgs.scrollHeight;
   }
-  fetch('https://api.anthropic.com/v1/messages', {
+  fetch('/ai', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': '',
-      'anthropic-version': '2023-06-01',
-      'anthropic-dangerous-direct-browser-access': 'true'
+      'Accept':'application/json'
     },
     body: JSON.stringify({
       model: 'claude-haiku-4-5-20251001',
@@ -3905,70 +3760,7 @@ function testPaymentEndpoints() {
     );
   });
 }
-
-function openJobsLivelihoods(){
-  openP('&#x1F4BC; Jobs & Livelihoods',
-    '<div class="card card-blue"><div style="font-size:16px;font-weight:800;margin-bottom:8px">&#x1F4BC; Employment & Income Support</div>'
-    +'<div style="font-size:13px;color:var(--text-2);line-height:1.8">Information on employment, vocational training, and livelihood support for displaced persons and humanitarian contexts.</div></div>'
-    +'<div class="sh" style="padding:14px 0 6px">International Resources</div>'
-    +'<div class="pr-row" ><div class="pr-ico" style="background:rgba(14,165,233,.15)">&#x1F1FA;&#x1F1F3;</div><div><div class="pr-t">ILO — Jobs for Peace</div><div class="pr-s">ilo.org/employment</div></div><div class="pr-a">&#x203A;</div></div>'
-    +'<div class="pr-row" ><div class="pr-ico" style="background:rgba(16,185,129,.15)">&#x1F91D;</div><div><div class="pr-t">UNHCR Livelihoods</div><div class="pr-s">unhcr.org/livelihoods</div></div><div class="pr-a">&#x203A;</div></div>'
-    +'<div class="pr-row" ><div class="pr-ico" style="background:rgba(245,158,11,.15)">&#x1F33F;</div><div><div class="pr-t">Mercy Corps — Economic Opportunity</div><div class="pr-s">mercycorps.org</div></div><div class="pr-a">&#x203A;</div></div>'
-    +'<div class="pr-row" ><div class="pr-ico" style="background:rgba(124,58,237,.15)">&#x1F4C8;</div><div><div class="pr-t">IRC — Employment Services</div><div class="pr-s">rescue.org/topic/economic-recovery</div></div><div class="pr-a">&#x203A;</div></div>'
-    +'<div class="sh" style="padding:14px 0 6px">Vocational Training</div>'
-    +'<div class="card card-green"><div class="sec-item"><div class="sec-ico">&#x1F4BB;</div><div><b>Digital Skills:</b> Coursera, edX, Google Career Certificates — free for displaced persons</div></div>'
-    +'<div class="sec-item"><div class="sec-ico">&#x1F4F1;</div><div><b>Mobile Livelihoods:</b> Skills4Work, RefugePoint — vocational training programs</div></div>'
-    +'<div class="sec-item"><div class="sec-ico">&#x1F4B0;</div><div><b>Microfinance:</b> Kiva.org — small business loans for displaced entrepreneurs</div></div></div>'
-    +'<div class="card card-orange"><div style="font-size:12px;color:rgba(245,158,11,.8);line-height:1.75">&#x26A0; Location-based job matching coming soon. Contact your nearest humanitarian office for local employment programs.</div></div>'
-  );
-}
-function openFamilyReunification(){
-  openP('&#x1F46A; Family Reunification',
-    '<div class="card card-red"><div style="font-size:14px;font-weight:800;color:#fca5a5;margin-bottom:8px">&#x26A0;&#xFE0F; Important Safety Notice</div><div style="font-size:12px;color:rgba(240,246,255,.7);line-height:1.8">Family reunification services involve sensitive personal information. Use only official humanitarian channels. This app provides information only — not a family tracing database.</div></div>'
-    +'<div class="sh" style="padding:14px 0 6px">Official Family Tracing Services</div>'
-    +'<div class="pr-row" ><div class="pr-ico" style="background:rgba(239,68,68,.15)">&#x1F6A8;</div><div><div class="pr-t">ICRC — Restoring Family Links</div><div class="pr-s">familylinks.icrc.org &middot; Official tracing service</div></div><div class="pr-a">&#x203A;</div></div>'
-    +'<div class="pr-row" ><div class="pr-ico" style="background:rgba(14,165,233,.15)">&#x1F91D;</div><div><div class="pr-t">UNHCR Family Reunification</div><div class="pr-s">unhcr.org/family-reunification</div></div><div class="pr-a">&#x203A;</div></div>'
-    +'<div class="pr-row" ><div class="pr-ico" style="background:rgba(16,185,129,.15)">&#x1F46B;</div><div><div class="pr-t">IRC — Family Services</div><div class="pr-s">rescue.org/topic/resettlement</div></div><div class="pr-a">&#x203A;</div></div>'
-    +'<div class="pr-row" ><div class="pr-ico" style="background:rgba(245,158,11,.15)">&#x1F9D2;</div><div><div class="pr-t">Save the Children — Family Tracing</div><div class="pr-s">savethechildren.org</div></div><div class="pr-a">&#x203A;</div></div>'
-    +'<div class="sh" style="padding:14px 0 6px">What to Do If Separated</div>'
-    +'<div class="card card-blue">'
-    +'<div class="sec-item"><div class="sec-ico">1&#xFE0F;&#x20E3;</div><div>Go to the nearest humanitarian office, camp, or police station and register your details</div></div>'
-    +'<div class="sec-item"><div class="sec-ico">2&#xFE0F;&#x20E3;</div><div>Contact ICRC at familylinks.icrc.org or call your local Red Cross/Red Crescent</div></div>'
-    +'<div class="sec-item"><div class="sec-ico">3&#xFE0F;&#x20E3;</div><div>Register with UNHCR — they coordinate family tracing across borders</div></div>'
-    +'<div class="sec-item"><div class="sec-ico">4&#xFE0F;&#x20E3;</div><div>Keep a written record of family members: full names, dates of birth, last known location</div></div>'
-    +'<div class="sec-item"><div class="sec-ico">5&#xFE0F;&#x20E3;</div><div>For children: notify child protection authorities and Save the Children immediately</div></div>'
-    +'</div>'
-  );
-}
-function openClimateResilience(){
-  openP('&#x1F331; Climate & Resilience',
-    '<div class="card card-green"><div style="font-size:16px;font-weight:800;margin-bottom:8px">&#x1F331; Climate Resilience</div><div style="font-size:13px;color:var(--text-2);line-height:1.8">Climate change is a major driver of displacement and humanitarian crises. Understanding climate risks helps communities prepare and adapt.</div></div>'
-    +'<div class="sh" style="padding:14px 0 6px">Climate Risks & Preparation</div>'
-    +'<div class="card card-blue">'
-    +'<div class="sec-item"><div class="sec-ico">&#x1F321;&#xFE0F;</div><div><b>Extreme Heat:</b> Stay hydrated (3L+ daily), avoid midday sun, identify cooling centers</div></div>'
-    +'<div class="sec-item"><div class="sec-ico">&#x1F327;&#xFE0F;</div><div><b>Flooding:</b> Know evacuation routes, keep 72hr kit ready, move to high ground early</div></div>'
-    +'<div class="sec-item"><div class="sec-ico">&#x1F4A7;</div><div><b>Drought & Water Scarcity:</b> Store clean water, learn water purification, contact WASH partners</div></div>'
-    +'<div class="sec-item"><div class="sec-ico">&#x1F32A;&#xFE0F;</div><div><b>Storms:</b> Shelter in place, secure belongings, follow evacuation orders immediately</div></div>'
-    +'<div class="sec-item"><div class="sec-ico">&#x1F525;</div><div><b>Wildfire:</b> Maintain defensible space, prepare go-bag, follow evacuation orders</div></div>'
-    +'</div>'
-    +'<div class="sh" style="padding:14px 0 6px">Resources</div>'
-    +'<div class="pr-row" ><div class="pr-ico" style="background:rgba(16,185,129,.15)">&#x1F30D;</div><div><div class="pr-t">UNDRR — Disaster Risk Reduction</div><div class="pr-s">undrr.org &middot; Global risk information</div></div><div class="pr-a">&#x203A;</div></div>'
-    +'<div class="pr-row" ><div class="pr-ico" style="background:rgba(14,165,233,.15)">&#x1F4CA;</div><div><div class="pr-t">Red Cross Climate Centre</div><div class="pr-s">climatecentre.org</div></div><div class="pr-a">&#x203A;</div></div>'
-    +'<div class="card card-orange" style="margin-top:10px"><div style="font-size:12px;color:rgba(245,158,11,.8);line-height:1.75">&#x26A0; Location-based climate risk mapping coming soon. Contact local authorities for area-specific climate advisories.</div></div>'
-  );
-}
-
-function openClinicFinder(){openHealthcare();openHealthcare();}
-
-function openHospitalFinder(){openHealthcare();openHealthcare();}
-
-function openMedicalEmergency(){openEmergencyContacts();openEmergencyContacts();}
-
-function filterCat(cat){var inp=document.getElementById('srch-q');if(inp){inp.value=cat;if(window.doSearch)window.doSearch(cat);}}
-
-function doSearch(q){if(window.doSearch)window.doSearch(q);}
-
-
 </script>
+<script>/* Testnet copy: same code, a clear label so nobody mistakes test Pi for real Pi */(function(){if(!/(^|[.-])testnet[.-]/i.test(location.hostname))return;document.title="[Testnet] "+document.title;var b=document.createElement("div");b.textContent="TESTNET";b.setAttribute("aria-label","Testnet: test Pi only");b.style.cssText="position:fixed;left:12px;bottom:calc(86px + env(safe-area-inset-bottom));z-index:99999;padding:3px 10px;border-radius:999px;background:#B45309;color:#fff;font:800 11px/1.4 system-ui,sans-serif;letter-spacing:.06em;pointer-events:none;opacity:.92";(document.body||document.documentElement).appendChild(b);})();</script>
 </body>
 </html>
